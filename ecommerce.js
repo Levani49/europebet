@@ -8,11 +8,52 @@ const rl = readline.createInterface({
 let catalog = {};
 
 function save_product(product_id, product_name, price) {
-  //Here We Add or modify a product in the catalog
+  // Check if product already exists in catalog
+  if (catalog[product_id]) {
+    console.log(`Product ${product_id} already exists in catalog`);
+  } else {
+    console.log(`Adding product ${product_id} to catalog`);
+  }
+
+  // Save product to catalog
+  catalog[product_id] = {
+    name: product_name,
+    price: Number(price),
+    balance: 0,
+    orders: [],
+  };
+
+  console.log(`Product ${product_id} saved.`);
 }
 
 function purchase_product(product_id, quantity, price) {
-  //With this function We Purchase a product and increase its balance
+  // Check if the product exists in the catalog
+  if (!catalog[product_id]) {
+    console.log(`Product ${product_id} does not exist in the catalog.`);
+    return;
+  }
+
+  // Calculate the cost of the purchase
+  const cost = quantity * price;
+
+  // Check if the customer has enough balance to make the purchase
+  if (catalog[product_id].balance < cost) {
+    console.log(
+      `You do not have enough balance to purchase ${quantity} units of product ${product_id}.`
+    );
+    return;
+  }
+
+  // Update the product's balance and add the purchase to its history
+  catalog[product_id].balance -= cost;
+  if (!catalog[product_id].history) {
+    catalog[product_id].history = [];
+  }
+  catalog[product_id].history.push({ quantity: quantity, price: price });
+
+  console.log(
+    `Purchased ${quantity} units of product ${product_id} for ${cost}.`
+  );
 }
 
 function order_product(product_id, quantity) {
