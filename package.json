@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Levani49/europebet/issues"
   },
-  "homepage": "https://github.com/Levani49/europebet#readme"
+  "homepage": "https://github.com/Levani49/europebet#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
 }
